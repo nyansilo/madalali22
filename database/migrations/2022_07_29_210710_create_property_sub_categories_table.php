@@ -18,10 +18,11 @@ return new class extends Migration
 
             $table->engine = 'InnoDB';
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('category_id')->unsigned()->nullable(); 
-            $table->foreign('category_id')->references('id')->on('property_categories')->onDelete('cascade');
             $table->string('title');
             $table->string('slug');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('property_categories')->onDelete('cascade');
+         
             $table->timestamps();
         });
     }

@@ -23,7 +23,7 @@ class PropertyCategory extends Model
      * @var array<string, string>
      */
     protected $fillable = [
-            'title','slug'
+            'title','slug',
         ];
     
     /**

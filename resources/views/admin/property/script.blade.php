@@ -1,19 +1,18 @@
   <script type="text/javascript">
         $('ul.pagination').addClass('no-margin pagination-sm');
+        
 
-        $('#title').on('blur', function() {
-            var theTitle = this.value.toLowerCase().trim(),
-                slugInput = $('#slug'),
-                theSlug = theTitle.replace(/&/g, '-and-')
-                                  .replace(/[^a-z0-9-]+/g, '-')
-                                  .replace(/\-\-+/g, '-')
-                                  .replace(/^-+|-+$/g, '');
+        $(document).ready(function(){
+            $('#title').keyup(function(e){
+                var str = $('#title').val();
+                str = str.replace(/\W+(?!$)/g, '-').toLowerCase();//rplace stapces with dash
+                $('#slug').val(str);
+                $('#slug').attr('placeholder', str);
 
-            slugInput.val(theSlug);
-        });
+            });
+        });  
 
-    
-        var simplemde2 = new SimpleMDE({ element: $("#body")[0] });
+
 
     
     </script>

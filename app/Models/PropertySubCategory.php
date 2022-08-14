@@ -27,6 +27,6 @@ class PropertySubCategory extends Model
      */   
     public function propertyCategory(){
 
-        return $this->belongsTo(PropertyCategory::class, 'category_id');
+        return $this->belongsTo(PropertyCategory::class);
     }
 }

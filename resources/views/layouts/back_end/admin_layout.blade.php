@@ -49,6 +49,7 @@
 <link href="{{asset('back_end/dist/css/tabler-payments.min.css')}}" rel="stylesheet"/>
 <link href="{{asset('back_end/dist/css/tabler-vendors.min.css')}}" rel="stylesheet"/>
 <link href="{{asset('back_end/dist/css/demo.min.css')}}" rel="stylesheet"/>
+<link href="{{asset('back_end/dist/css/bootstrap-tagsinput.css')}}" rel="stylesheet"/>
     
 
 
@@ -91,6 +92,7 @@
 <!-- Tabler Core -->
 <script src="{{asset('back_end/dist/js/tabler.min.js')}}" defer></script>
 <script src="{{asset('back_end/dist/js/demo.min.js')}}" defer></script>
+<script src="{{asset('back_end/dist/js/bootstrap-tagsinput.js')}}"></script>
 
 
 <script src="{{asset('back_end/plugins/simplemde/simplemde.min.js')}}"></script>
