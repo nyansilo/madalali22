@@ -26,6 +26,7 @@
             <div class="card-footer text-end">
                   <div class="d-flex">
                     <a href="{{ route('admin.blog_category.index') }}" class="btn btn-default">Cancel</a>
+                    
                      <button type="submit" class="btn btn-primary ms-auto">{{ $category->exists ? 'Update' : 'Save' }}</button>
                 
                   

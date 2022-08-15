@@ -34,7 +34,9 @@ class DatabaseSeeder extends Seeder
             BlogsTableSeeder::class,
             BlogCategoriesTableSeeder::class,
             TagsTableSeeder::class,
-            BlogCommentsTableSeeder::class,       
+            BlogCommentsTableSeeder::class, 
+            RolesTableSeeder::class,
+            PermissionsTableSeeder::class,      
        ]);
 
        

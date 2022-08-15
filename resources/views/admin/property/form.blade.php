@@ -294,10 +294,6 @@
         </div>
     </div>
 
-
-    
-
-
     {{-- Feature Image --}} 
     <div class="card mb-3">
 
@@ -339,7 +335,4 @@
     </div>
 
 
-    
-
-
-</div?    
+</div>  

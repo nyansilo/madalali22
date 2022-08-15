@@ -138,7 +138,7 @@ Route::group(
 
         //Team
         Route::get('/team', [
-            'uses' => 'PageControllerr@team',
+            'uses' => 'PageController@team',
             'as'   => 'team',
         ]);
 
@@ -209,11 +209,13 @@ Route::group(
     ], 
     function () {
         //Dashborads Admin routes
-        Route::get('/dashboard', 'AdminController@index')->name('admin.dashboard');
+        Route::get('/dashboard', 'AdminController@dashboard')->name('admin.dashboard');
         Route::put('/blog/restore/{blog}', 'BlogController@restore')->name('admin.blog.restore');
         Route::delete('/blog/force-destroy/{blog}', 'BlogController@forceDestroy')->name('admin.blog.force-destroy');
         Route::put('/property/restore/{property}', 'PropertyController@restore')->name('admin.property.restore');
         Route::delete('/property/force-destroy/{property}', 'PropertyController@forceDestroy')->name('admin.property.force-destroy');
+        Route::get('/admin/confirm/{admin}', 'AdminController@confirm')->name('admin.administrator.confirm');
+        Route::get('/user/confirm/{user}', 'UserController@confirm')->name('admin.user.confirm');
       
 
         Route::resource('/blog',  'BlogController', 
@@ -259,6 +261,39 @@ Route::group(
           'destroy'  => 'admin.property_category.destroy',
           'edit'     => 'admin.property_category.edit',
          ]]);
+
+        Route::resource('/admin',  'AdminController', 
+        ['names' => [
+          'index'    => 'admin.administrator.index',
+          'store'    => 'admin.administrator.store',
+          'create'   => 'admin.administrator.create',
+          'update'   => 'admin.administrator.update',
+          'show'     => 'admin.administrator.show',
+          'destroy'  => 'admin.administrator.destroy',
+          'edit'     => 'admin.administrator.edit',
+        ]]);
+
+        Route::resource('/user',  'UserController', 
+        ['names' => [
+          'index'    => 'admin.user.index',
+          'store'    => 'admin.user.store',
+          'create'   => 'admin.user.create',
+          'update'   => 'admin.user.update',
+          'show'     => 'admin.user.show',
+          'destroy'  => 'admin.user.destroy',
+          'edit'     => 'admin.user.edit',
+        ]]);
+
+        Route::resource('/admin_role', 'RoleController', 
+        ['names' => [
+          'index'    => 'admin.admin_role.index',
+          'store'    => 'admin.admin_role.store',
+          'create'   => 'admin.admin_role.create',
+          'update'   => 'admin.admin_role.update',
+          'show'     => 'admin.admin_role.show',
+          'destroy'  => 'admin.admin_role.destroy',
+          'edit'     => 'admin.admin_role.edit',
+        ]]);
 
 
      

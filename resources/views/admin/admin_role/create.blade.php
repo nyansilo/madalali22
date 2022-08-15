@@ -1,6 +1,6 @@
 @extends('layouts.back_end.admin_layout')
 
-@section('title', 'Madalali4u | Create Property')
+@section('title', 'Madalali4u | Create Admin Role')
 
 @section('admin_content')
 
@@ -11,19 +11,19 @@
               <div class="col">
 
                 <h2 class="page-title">
-                  Create property 
+                  Create Admin Role
                 </h2>
-                <div class="text-muted mt-1"><a href="{{ url('/admin/dashboard') }}"> Dashboard</a> > Create Property</div>
+                <div class="text-muted mt-1"><a href="{{ url('/admin/dashboard') }}"> Dashboard</a> > Create Admin Role</div>
 
 
               </div>
                 <!-- Page title actions -->
               <div class="col-12 col-md-auto ms-auto d-print-none">
                 <div class="btn-list">
-                  <a href="{{ route('admin.property.index')}}" class="btn btn-primary d-none d-sm-inline-block">
+                  <a href="{{ route('admin.admin_role.index')}}" class="btn btn-primary d-none d-sm-inline-block">
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                     <i class="ti ti-eye"></i>
-                    All Properties
+                    All Roles
                   </a>
                   <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -46,39 +46,33 @@
 
             <div class="row row-cards">
 
-               {!! Form::model($property, [
+               {!! Form::model($role, [
 
                             'method' => 'POST',
-                            'route'  => 'admin.property.store',
+                            'route'  => 'admin.admin_role.store',
                             'files'  => TRUE,
-                            'id' => 'post-form'
+                            'id' => 'role-form'
                         ]) 
 
                !!}
 
-              @include('admin.property.form')
+              @include('admin.admin_role.form')
 
               {!! Form::close() !!}
               
             </div>
 
       </div>
-
-      @include('layouts.back_end.footer')
           
  </div>   
 
 
-
+@include('layouts.back_end.footer')
 
 @endsection
 
 @section('script')
- 
- @section('script')
     
-    @include('admin.property.script')
+    @include('admin.admin_role.script')
     
-@endsection
-
 @endsection
