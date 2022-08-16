@@ -5,7 +5,7 @@
 	<h4 class="title">blog Categories </h4>
 	<div class="widget_list">
 		<ul class="list_details">
-			@foreach ($blogCategories as $category)
+			@foreach ($categories as $category)
 
 			<li><a href="{{ route('blog.category', $category->slug) }}"><i class="fa fa-caret-right mr10"></i>
 				{{ $category->title }} 

@@ -3,6 +3,6 @@
 
 @section('content')
 
-    @include('users.dashboard.dashboard_body')
+    @include('user.main.dashboard_body')
 
 @endsection

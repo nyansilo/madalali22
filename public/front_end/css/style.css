@@ -4602,6 +4602,18 @@ form.home5_advanced_search_form .form-group input.form-control::-ms-input-placeh
   padding: 5px 8px;
   text-align: center;
 }
+
+.status_tag.badge4{
+  border-radius: 3px;
+  background-color: orange;
+  font-size: 14px;
+  font-family: "Nunito";
+  color: rgb(254, 254, 254);
+  height: 25px;
+  line-height: 20px;
+  padding: 5px 8px;
+  text-align: center;
+}
 .bs_carousel .feat_property.home8{
   opacity: 0;
   -webkit-transform: translateY(20px);
@@ -16437,6 +16449,10 @@ button.gm-ui-hover-effect:focus {
   border-radius: 13px !important;
 }
 
+a.selected-status {
+    font-weight: bold;
+    color: #ff5a5f;
+}
 
 
 

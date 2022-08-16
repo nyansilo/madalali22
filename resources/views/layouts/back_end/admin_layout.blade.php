@@ -10,9 +10,7 @@
     <title>@yield('title', 'Madalali4u')</title>
 
 
-   
 
-    
 
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="/back_end/dist/css/bootstrap.min.css"> 

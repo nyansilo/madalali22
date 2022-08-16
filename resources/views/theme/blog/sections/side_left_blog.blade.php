@@ -24,10 +24,10 @@
 					<div class="thumb">
 						@if($blog->image)
 						   
-						<img class="img-whp" 
-							height="400"
-							src="{{$blog->image_url }}" 
-							alt="{{$blog->title }}">
+							<img class="img-whp" 
+								height="400"
+								src="{{$blog->image_url }}" 
+								alt="{{$blog->title }}">
 						@else
 						    <img class="img-whp"
 							src="{{$blog->default_img }}"
@@ -44,7 +44,9 @@
 							<p>{{$blog->short_body}}</p>
 						</div>
 						<div class="fp_footer">
+							
 							<ul class="fp_meta float-left mb0">
+
 								@if($blog->profile_url)
 									<li class="list-inline-item">					
 										<a href="{{ route('blog.author', $blog->author->slug) }}">
@@ -56,7 +58,7 @@
 									</li>
 								@else
 									<li class="list-inline-item">					
-										<a href="{{ route('blog.author', $blog->author->slug) }}">
+										<a href="#">
 											<img style="max-height: 40px; max-width: 40px"
 											src="{{$blog->default_profile}}" 
 											alt="{{$blog->full_name}}">
@@ -66,7 +68,7 @@
 								@endif
 
 								<li class="list-inline-item">
-									<a href="#">{{$blog->full_name}}</a>
+									<a href="{{ route('blog.author', $blog->author->slug) }}">{{$blog->full_name}}</a>
 								</li>
 								<li class="list-inline-item">
 									<a href="#">

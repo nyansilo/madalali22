@@ -123,6 +123,11 @@ Route::group(
             'as'   => 'blog.tag'
         ]);
 
+        Route::post('/blog/{blog}/comments', [
+            'uses' => 'CommentController@store',
+            'as'   => 'blog.comment'
+        ]);
+
 
          //About 
         Route::get('/about', [
@@ -154,10 +159,6 @@ Route::group(
         Route::get('/get/sub-categories/{category_id}', 'PropertyController@getSubCategories');
         Route::get('/get/districts/{region_id}', 'PropertyController@getDistricts');
 
-
-
-
-
     }
             
 );
@@ -166,7 +167,6 @@ Route::group(
 
 /*---------------------End of Theme Front End Routes -----------------------*/
 
-Auth::routes();
 
 /*
 |--------------------------------------------------------------------------
@@ -296,7 +296,6 @@ Route::group(
         ]]);
 
 
-     
 
 
     }
@@ -305,14 +304,48 @@ Route::group(
 
 );
 
-/*--------------------End of Admin outes--------------------------------*/
+/*--------------------End of Admin routes--------------------------------*/
 
-  
+/*
+|--------------------------------------------------------------------------
+| Auth User Routes
+|--------------------------------------------------------------------------
+*/  
 
 Auth::routes();
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 Route::get('/users/logout', 'App\Http\Controllers\Auth\LoginController@userLogout')->name('users.logout');
-//Route::get('/users/submit-property', 'App\Http\Controllers\HomeController@submitProperty')->name('user.submit-property');
-//Route::get('/users/my-properties', 'App\Http\Controllers\HomeController@myProperties')->name('users.my-properties');
-//Route::get('/users/my-favorite','App\Http\Controllers\UserPropertyController@userFavorites')->name('users.my-favorites');
+
+Route::group(
+    [ 
+
+    'namespace' => 'App\Http\Controllers\User',
+    'middleware' => ['auth'], 
+    'prefix' => 'user',
+    ], 
+    function () {
+
+    Route::get('/dashboard', 'HomeController@dashboard')->name('user.dashboard');
+
+    Route::resource('/property',  'PropertyController', 
+        ['names' => [
+          'index'    => 'user.property.index',
+          'store'    => 'user.property.store',
+          'create'   => 'user.property.create',
+          'update'   => 'user.property.update',
+          'show'     => 'user.property.show',
+          'destroy'  => 'user.property.destroy',
+          'edit'     => 'user.property.edit',
+    ]]);
+
+    //Route::get('/users/submit-property', 'App\Http\Controllers\HomeController@submitProperty')->name('user.submit-property');
+    //Route::get('/users/my-properties', 'App\Http\Controllers\HomeController@myProperties')->name('users.my-properties');
+    //Route::get('/users/my-favorite','App\Http\Controllers\UserPropertyController@userFavorites')->name('users.my-favorites');
+
+
+    }
+
+);
+
+
+/*--------------------End of Users routes--------------------------------*/

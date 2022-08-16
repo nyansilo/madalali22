@@ -7,7 +7,7 @@
 			    <li class="breadcrumb-item active text-thm" aria-current="page">
 			    @if (isset($categoryName)) 	
 			       {{ $categoryName }} Category
-			    @elseif(isset($authorrName))
+			    @elseif(isset($authorName))
 			    	{{ $authorName}} blogs
 			    @elseif(isset($tagName))
 			    	{{ $tagName}} 

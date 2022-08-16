@@ -165,10 +165,31 @@ class Property extends Model
         return $query->orderBy('view','desc');
     }
 
+     public function scopeRecentViewed($query){
+        return $query->orderBy('view','desc')->limit(4);
+    }
+
+    public function scopeRelatedProperties($query, $count = 6, $inRandomOrder = true)
+    {
+        $query = $query->where('category_id', $this->category_id)
+
+
+                       ->where('slug','!=',$this->slug);
+
+        if ($inRandomOrder) {
+            $query->inRandomOrder();
+            //$query->orderByRaw('RAND()');
+        }
+
+        return $query->take($count);
+    }
+
   
     public function scopeRent($query){
         return $query->where('type','=','Rent');
     }
+
+    
 
     public function scopeSale($query){
         return $query->where('type','=','Sale');
@@ -387,6 +408,20 @@ class Property extends Model
         }
         else {
             return '<span class="badge bg-red-lt">Rejected</span>';
+        }
+    }
+
+
+    public function publicationLabelUser()
+    {
+        if ($this->status  == 'published') {
+            return '<span class="status_tag badge2">Published</span>';
+        }
+        elseif ($this->status  == 'pending') {
+            return '<span class="status_tag badge4">Pending</span>';
+        }
+        elseif($this->status  == 'rejected') {
+            return '<span class="status_tag badge">Rejected</span>';
         }
     }
 

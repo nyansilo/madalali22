@@ -20,7 +20,7 @@
 <!-- Responsive stylesheet -->
 <link rel="stylesheet" href="{{ asset('front_end/css/responsive.css') }}">
 <!-- Title -->
-<title>{{ config('app.name', 'Madalali4u') }}</title>
+<title>@yield('title', 'Madalali4u')</title>
 <!-- Favicon -->
 <link href="images/favicon.ico" sizes="128x128" rel="shortcut icon" type="image/x-icon" />
 <link href="images/favicon.ico" sizes="128x128" rel="shortcut icon" />
@@ -92,6 +92,8 @@
 
 <!-- Custom script for all pages --> 
 <script type="text/javascript" src="{{ asset('front_end/js/script.js') }}"></script>
+
+@yield('script')
 
 @livewireScripts
 

@@ -7,7 +7,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-//use GrahamCampbell\Markdown\Facades\Markdown;
+use GrahamCampbell\Markdown\Facades\Markdown;
 use App\Models\Blog;
 ;
 
@@ -47,7 +47,21 @@ class BlogComment extends Model
 
     public function getBodyHtmlAttribute()
     {
-        //return Markdown::convertToHtml(e($this->body));
+        return Markdown::convertToHtml(e($this->body));
+    }
+
+     public function dateFormatted($showTimes = false)
+    {
+        $format = "d/m/Y";
+        if ($showTimes) $format = $format . " H:i:s";
+        return $this->created_at->format($format);
+    }
+
+    public function dateDisplay($showTimes = false)
+    {
+        $format = "F d, Y";
+        if ($showTimes) $format = $format . " H:i:s";
+        return $this->created_at->format($format);
     }
 
 

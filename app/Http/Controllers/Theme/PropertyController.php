@@ -15,7 +15,7 @@ use App\Models\PropertySubCategory;
 class PropertyController extends Controller
 {
     
-    protected $limit = 3;
+    protected $limit = 4;
 
     public function index()
     {
@@ -64,6 +64,7 @@ class PropertyController extends Controller
         
         $featuredProperties  = Property::with('owner','district','region','category')->featured()->get();
         $lastestProperties   = Property::with('owner','district','region','category')->latest()->get();
+        
         return view("theme.home.index",compact('featuredProperties','lastestProperties'));
         
     }
@@ -85,7 +86,12 @@ class PropertyController extends Controller
                    ->rent()
                    ->latest()
                    ->paginate($this->limit);
-        return view("theme.property.rent",compact('rentProperties','propertyCategories'));
+
+
+        $recentViewedProperties   = Property::with('owner','district','region','category')->latest()->recentViewed()->get();
+
+        $featuredProperties  = Property::with('owner','district','region','category')->featured()->get();           
+        return view("theme.property.rent",compact('rentProperties','propertyCategories','recentViewedProperties','featuredProperties'));
         
     }
 
@@ -105,7 +111,13 @@ class PropertyController extends Controller
         $saleProperties  = Property::with('owner','district','region','category')
                    ->sale()
                    ->paginate($this->limit);
-        return view("theme.property.sale",compact('saleProperties','propertyCategories'));
+        $recentViewedProperties   = Property::with('owner','district','region','category')->latest()->recentViewed()->get();
+
+       $featuredProperties  = Property::with('owner','district','region','category')->featured()->get(); 
+
+       $recentViewedProperties   = Property::with('owner','district','region','category')->latest()->recentViewed()->get(); 
+
+        return view("theme.property.sale",compact('saleProperties','propertyCategories','recentViewedProperties','featuredProperties','recentViewedProperties'));
         
     }
 
@@ -145,7 +157,14 @@ class PropertyController extends Controller
                 $query->published();
          }])->orderBy('title', 'asc')->get();
 
-        return view('theme.property.property_detail', compact('property','propertyCategories'));
+        $recentViewedProperties   = Property::with('owner','district','region','category')->latest()->recentViewed()->get();
+
+        $similarProperties  = $property->relatedProperties(4, true)->with('owner','district','region','category')->get();
+
+
+        $featuredProperties  = Property::with('owner','district','region','category')->featured()->get(); 
+
+        return view('theme.property.property_detail', compact('property','propertyCategories','recentViewedProperties','similarProperties','featuredProperties'));
         
         
     }
@@ -167,7 +186,13 @@ class PropertyController extends Controller
         ->latest()
         //->published()
         ->paginate($this->limit);
-        return view('theme.property.properties', compact('properties','propertyCategories'));
+        $recentViewedProperties   = Property::with('owner','district','region','category')->latest()->recentViewed()->get();
+
+        $featuredProperties  = Property::with('owner','district','region','category')->featured()->get();
+
+
+
+        return view('theme.property.properties', compact('properties','propertyCategories','recentViewedProperties','featuredProperties'));
     }
     
 
@@ -187,13 +212,17 @@ class PropertyController extends Controller
                 $query->published();
          }])->orderBy('title', 'asc')->get();
          //get all properties by category filter
-         $properties =  $category->properties()
+        $properties =  $category->properties()
                             ->with('owner','district','region','category')
                             ->latest()
                             //->published()
                             ->Paginate($this->limit);
+        $featuredProperties  = Property::with('owner','district','region','category')->featured()->get(); 
 
-         return view('theme.property.properties', compact('properties','categoryName','propertyCategories' )); 
+
+        $recentViewedProperties   = Property::with('owner','district','region','category')->latest()->recentViewed()->get();                    
+
+         return view('theme.property.properties', compact('properties','categoryName','propertyCategories','featuredProperties','recentViewedProperties' )); 
 
     }
 
@@ -221,7 +250,13 @@ class PropertyController extends Controller
                             //->published()
                             ->Paginate($this->limit);
 
-         return view('theme.property.properties', compact('properties','ownerName','propertyCategories' )); 
+        $featuredProperties  = Property::with('owner','district','region','category')->featured()->get(); 
+
+
+        $recentViewedProperties   = Property::with('owner','district','region','category')->latest()->recentViewed()->get();                  
+
+
+         return view('theme.property.properties', compact('properties','ownerName','propertyCategories','featuredProperties','recentViewedProperties' )); 
 
     }
 

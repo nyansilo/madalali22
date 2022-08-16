@@ -12,7 +12,7 @@
 
 		<!-- Features listing Section
 		================================================== -->
-		@include('theme.blog.sections.featured_listing')
+		@include('theme.blog.sections.popular_blog')
 
 
 		<!-- Features listing Section

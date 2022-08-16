@@ -2,15 +2,15 @@
 	    <ul class="sidebar-menu">
 	   		<li class="header"><img src="/front_end/images/header-logo2.png" alt="header-logo2.png"> Madalali4u</li>
 	   		<li class="title"><span>Main</span></li>
-	    	<li class="treeview"><a href="page-dashboard.html"><i class="flaticon-layers"></i><span> Dashboard</span></a></li>
+	    	<li class="treeview"><a href="{{ route('user.dashboard') }}"><i class="flaticon-layers"></i><span> Dashboard</span></a></li>
 	      	<li class="treeview"><a href="page-message.html"><i class="flaticon-envelope"></i><span> Message</span></a></li>
 	   		<li class="title"><span>Manage Listings</span></li>
 	      	<li class="treeview">
 		        <a href="page-my-properties.html"><i class="flaticon-home"></i> <span>My Properties</span><i class="fa fa-angle-down pull-right"></i></a>
 		        <ul class="treeview-menu">
-		        	<li><a href="#"><i class="fa fa-circle"></i> General Elements</a></li>
-		        	<li><a href="#"><i class="fa fa-circle"></i> Advanced Elements</a></li>
-		        	<li><a href="#"><i class="fa fa-circle"></i> Editors</a></li>
+		        	<li><a href="{{ route('user.property.index') }}"><i class="fa fa-circle"></i> All Properties</a></li>
+		        	<li><a href="{{ route('user.property.create') }}"><i class="fa fa-circle"></i> Create Property</a></li>
+	        	
 		        </ul>
 	      	</li>
 	      	<li><a href="page-my-favorites.html"><i class="flaticon-heart"></i> <span> My Favorites</span></a></li>

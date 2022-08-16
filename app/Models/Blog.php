@@ -89,6 +89,21 @@ class Blog extends Model
 
     }
 
+
+    public function scopeRelatedPost($query, $count = 6, $inRandomOrder = true)
+    {
+        $query = $query->where('category_id', $this->category_id)
+                       ->where('slug','!=',$this->slug);
+
+        if ($inRandomOrder) {
+            $query->inRandomOrder();
+            //$query->orderByRaw('RAND()');
+        }
+
+        return $query->take($count);
+    }
+
+
     public function scopePublished($query)
     {
         return $query->where("published_at", "<=", Carbon::now());
@@ -234,6 +249,11 @@ class Blog extends Model
         //return Str::words($this->title, 3, '...');
         return Str::limit($this->body, 200, ' ...');
     }
+     public function getSmallBodyAttribute($value)
+    {
+        //return Str::words($this->title, 3, '...');
+        return Str::limit($this->body, 40, ' ...');
+    }
 
     public function getFullNameAttribute($value)
     {
@@ -242,6 +262,24 @@ class Blog extends Model
         $fullName  = $firstName ." ".$lastName;
 
         return $fullName; 
+    }
+    public function getShortTitleAttribute($value)
+    {
+        //return Str::words($this->title, 3, '...');
+        return Str::limit($this->title, 20, ' ...');
+    }
+
+
+    public function getMediumTitleAttribute($value)
+    {
+        //return Str::words($this->title, 3, '...');
+        return Str::limit($this->title, 40, ' ...');
+    }
+
+     public function getMediumBodyAttribute($value)
+    {
+        //return Str::words($this->title, 3, '...');
+        return Str::limit($this->body, 40, ' ...');
     }
 
     //===================== MODEL BINDING START =============================
@@ -335,6 +373,11 @@ class Blog extends Model
         $blogsNumber = $this->view_count;
 
         return $blogsNumber. " " . Str::plural($label, $blogsNumber);
+    }
+
+    public function createComment(array $data){
+
+        $this->comments()->create($data);
     }
 
     

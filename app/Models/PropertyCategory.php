@@ -82,6 +82,10 @@ class PropertyCategory extends Model
         return 'slug';  
     }
 
+    public function scopeApartment($query){
+        return $query->where('title','=','Apartments');
+    }
+
 
     
     //===================== OTHER FUNCTIONS START =======================

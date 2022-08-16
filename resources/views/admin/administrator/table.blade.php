@@ -77,6 +77,11 @@
                                           {{ $permission->name }}                                    
                                       </span>
                                   @endforeach
+                              @else   
+                              
+                                   <span class="badge badge-primary">
+                                          No permission assigned            
+                                    </span> 
                               
                               @endif
 

@@ -157,6 +157,7 @@ return [
     'providers' => [
 
         Intervention\Image\ImageServiceProvider::class,
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
         /*
          * Laravel Framework Service Providers...
@@ -216,6 +217,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
     ])->toArray(),
 
 ];

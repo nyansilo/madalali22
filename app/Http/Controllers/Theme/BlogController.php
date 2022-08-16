@@ -8,12 +8,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BlogCategory;
 use App\Models\Blog;
-use App\Models\BlogTag;
+use App\Models\Tag;
 use App\Models\Admin; 
 
 class BlogController extends Controller
 {
    protected $limit = 3;
+
     public function blogs(){
 
         
@@ -27,16 +28,29 @@ class BlogController extends Controller
 
 
         //this is bad practise repeating code we will use the composer service provider instead
-        $blogCategories = BlogCategory::with(['blogs' => function($query) {
-            $query->published();
-        }])->orderBy('title', 'asc')->get(); 
+        //$categories = BlogCategory::with(['blogs' => function($query) {
+            //$query->published();
+        //}])->orderBy('title', 'asc')->get(); 
+
+        $categories = BlogCategory::with('blogs')->orderBy('title', 'asc')->get(); 
+
+
+        $tags = Tag::with('blogs')->orderBy('name', 'asc')->get();
+
 
         $blogs = Blog::with('author','category','comments')
                     ->latestFirst()
                     ->published()
                     //->filter(request('term'))
                     ->Paginate($this->limit);
-        return view('theme.blog.blogs', compact('blogs','blogCategories'));
+        $popularBlogs = Blog::with('author','category','comments')
+                    ->popular()
+                    ->latestFirst()
+                    ->published()
+                    ->Paginate(4);
+                 
+
+        return view('theme.blog.blogs', compact('blogs','categories','popularBlogs','tags'));
         
     }
 
@@ -48,52 +62,74 @@ class BlogController extends Controller
 
          
 
-        $blogCategories = BlogCategory::with(['blogs' => function($query) {
-            $query->published();
-        }])->orderBy('title', 'asc')->get(); 
+        $categories = BlogCategory::with('blogs')->orderBy('title', 'asc')->get(); 
    
-         $blogs =  $blog_category->blogs()
+        $blogs =  $blog_category->blogs()
                             ->with('author','comments')
                             ->latestFirst()
                             ->published()
                             ->Paginate($this->limit);
-         return view('theme.blog.blogs', compact('blogs','categoryName','blogCategories'));
+
+        $popularBlogs = Blog::with('author','category','comments')
+                        ->popular()
+                        ->latestFirst()
+                        ->published()
+                        ->Paginate(4);
+
+        $tags = Tag::with('blogs')->orderBy('name', 'asc')->get();                 
+
+
+                        
+        return view('theme.blog.blogs', compact('blogs','categoryName','categories','popularBlogs','tags'));
 
     }
 
     //Get all blogs for particular category
-    public function tag(BlogTag $tag)
+    public function blogTag(Tag $tag)
     {
-        $tagName = $tag->title;
+        $tagName = $tag->name;
 
 
-        $categories = BlogCategory::with(['blogs' => function($query) {
-            $query->published();
-        }])->orderBy('title', 'asc')->get(); 
+        $categories = BlogCategory::with('blogs')->orderBy('title', 'asc')->get(); 
+
+        $tags = Tag::with('blogs')->orderBy('name', 'asc')->get(); 
 
         $blogs = $tag->blogs()
                           ->with('author', 'category','comments')
                           ->latestFirst()
                           ->published()
-                          ->simplePaginate($this->limit);
+                          ->Paginate($this->limit);
 
-         return view("theme.blog.blogs", compact('blogs', 'tagName','categories'));
+        $popularBlogs = Blog::with('author','category','comments')
+                    ->popular()
+                    ->latestFirst()
+                    ->published()
+                    ->Paginate(4);                 
+         return view("theme.blog.blogs", compact('blogs', 'tagName','categories','popularBlogs','tags'));
     }
 
     //Get all blogs for particular author
-    public function author(Admin $author)
+    public function blogAuthor(Admin $author)
     {
-        $authorName = $author->name;
+        $authorName = $author->full_name;
 
-        $categories = BlogCategory::with(['blogs' => function($query) {
-            $query->published();
-        }])->orderBy('title', 'asc')->get(); 
+        $categories = BlogCategory::with('blogs')->orderBy('title', 'asc')->get();
+
+        $tags = Tag::with('blogs')->orderBy('name', 'asc')->get(); 
+
         $blogs =  $author->blogs()
                             ->with('category','tags','comments')
                             ->latestFirst()
-                            ->published()
+                            //->published()
                             ->Paginate($this->limit);
-         return view('theme.blog.blogs', compact('blogs','authorName','categories'));
+
+        $popularBlogs = Blog::with('author','category','comments')
+                    ->popular()
+                    ->latestFirst()
+                    ->published()
+                    ->Paginate(4); 
+
+        return view('theme.blog.blogs', compact('blogs','authorName','categories','tags','popularBlogs'));
 
     }
 
@@ -101,9 +137,7 @@ class BlogController extends Controller
        
        
         //this is bad practise repeating code we will use the composer service provider instead
-        /*  $categories = Category::with(['posts' => function($query) {
-            $query->published();
-        }])->orderBy('title', 'asc')->get();
+        /*  $categories = Category::with('posts')->orderBy('title', 'asc')->get();
         
         return view('hotelfront.postdetail', compact('post','categories'));
          */
@@ -116,18 +150,27 @@ class BlogController extends Controller
          //update posts set view_count = view_count + 1 whare id=?
          #method 1
          //$viewCount = (int)$post->view_count + 1;
-         //$post->update(['view_count' => $viewCount]);
+         //$post->update('view_count' => $viewCount);
 
          #method 2:
         (int)$blog->increment('view_count');
 
-        $blogCategories = BlogCategory::with(['blogs' => function($query) {
-            $query->published();
-        }])->orderBy('title', 'asc')->get(); 
+        $categories = BlogCategory::with('blogs')->orderBy('title', 'asc')->get(); 
 
-        $blogComments = $blog->comments()->Paginate(3); 
+        $tags = Tag::with('blogs')->orderBy('name', 'asc')->get(); 
 
-        return view('theme.blog.blog_detail', compact('blog', 'blogComments','blogCategories'));
+
+        $blogComments = $blog->comments()->simplePaginate(3);
+
+        $popularBlogs = Blog::with('author','category','comments')
+                    ->popular()
+                    ->latestFirst()
+                    ->published()
+                    ->Paginate(4);
+
+        $relatedBlogs  = $blog->relatedPost(4, true)->with('author','category','comments')->get();            
+
+        return view('theme.blog.blog_detail', compact('blog', 'blogComments','categories','popularBlogs','relatedBlogs','tags'));
         
         
     }

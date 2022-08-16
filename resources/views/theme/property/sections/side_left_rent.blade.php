@@ -91,6 +91,7 @@
 							<div class="tc_content">
 								<div class="dtls_headr">
 									<ul class="tag">
+										
 										<li class="list-inline-item type">
 											<a
 											   href="{{ route(strtolower($property->type)) }}
