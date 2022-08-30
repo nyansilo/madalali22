@@ -20,13 +20,14 @@ return new class extends Migration
             $table->string('user_name');
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('phone_number');
             $table->string('slug');
             $table->string('job_title')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('bio')->nullable();
-            $table->string('profile_picture')->nullable();
+            $table->string('profile_picture')->default('profileImg.png');
             $table->rememberToken();
             $table->timestamps();
         });

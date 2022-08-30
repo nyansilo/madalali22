@@ -10,7 +10,7 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * 
+     *
      * @return void
      */
     public function up()
@@ -38,6 +38,7 @@ return new class extends Migration
             $table->string('discount_price')->nullable();
             $table->enum('is_negotiable', [1,0]);
             $table->enum('is_featured', [1,0])->comment('1 : Featured, 0 : NotFeatured');
+            $table->boolean('is_favorite')->default(0);
             $table->unsignedInteger('region_id')->unsigned()->nullable();
             $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
             $table->unsignedInteger('district_id')->unsigned()->nullable();
@@ -50,21 +51,21 @@ return new class extends Migration
             $table->integer('hot_deal')->nullable();
             $table->integer('best_rated')->nullable();
             $table->integer('trend')->nullable();
-            
+
 
             $table->integer('area')->nullable();
             $table->integer('room')->nullable();
-            $table->string('sitting_room')->nullable();
+            $table->integer('sitting_room')->nullable();
             $table->integer('bed')->nullable();
             $table->integer('bath')->nullable();
             $table->String('zip_code')->nullable();
 
             $table->string('brand')->nullable();
             $table->string('model_type')->nullable();
-            $table->enum('driving_type',['Automatic', 'Manual'])->nullable();  
+            $table->enum('driving_type',['Automatic', 'Manual'])->nullable();
             $table->integer('engine_capacity')->nullable();
             $table->integer('coverage')->nullable();
-            $table->enum('fuel_type',['Diesel', 'Petrol','Electricity','Gas'])->nullable();  
+            $table->enum('fuel_type',['Diesel', 'Petrol','Electricity','Gas'])->nullable();
             $table->String('color')->nullable();
 
 
@@ -76,6 +77,9 @@ return new class extends Migration
             $table->enum('mark_as_urgent', ['0','1'])->nullable();
 
             $table->integer('view')->nullable();
+            $table->double('rate')->nullable();
+            $table->integer('numRate')->nullable();
+            $table->boolean('is_booking')->default(1);
             $table->integer('max_impression')->nullable();
             $table->unsignedInteger('owner_id')->unsigned()->nullable();
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');

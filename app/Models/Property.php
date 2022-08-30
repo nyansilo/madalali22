@@ -1,6 +1,6 @@
 <?php
 
-//Command: php artisan make:model Property 
+//Command: php artisan make:model Property
 
 namespace App\Models;
 
@@ -16,7 +16,7 @@ use App\Models\PropertyCategory;
 use App\Models\PropertySubCategory;
 use App\Models\PropertyImage;
 use App\Models\User;
- 
+
 
 class Property extends Model
 {
@@ -32,9 +32,10 @@ class Property extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
-        'favorite' => 'boolean',
+        'is_favorite' => 'boolean',
+        'is_booking' => 'boolean',
         'price' => 'double',
-        
+
     ];
 
     /**
@@ -42,39 +43,44 @@ class Property extends Model
      * Set up the field that will be inserted in DB.
      * @var array<string, string>
      */
-    protected $fillable = [     
-            'title',           
+    protected $fillable = [
+            'title',
             'slug',
-            'property_code',       
-            'address',         
-            'region_id',       
-            'district_id',     
-            'category_id',     
-            'subcategory_id',  
-            'type',           
-            'status',          
-            'area',            
-            'price',           
-            'description',     
-            'room',           
-            'bed',             
-            'bath',            
-            'sitting_room',    
-            'brand',           
-            'coverage',        
-            'engine_capacity', 
-            'color' ,          
-            'driving_type',    
+            'property_code',
+            'address',
+            'region_id',
+            'district_id',
+            'category_id',
+            'subcategory_id',
+            'type',
+            'status',
+            'area',
+            'price',
+            'description',
+            'room',
+            'bed',
+            'bath',
+            'sitting_room',
+            'brand',
+            'coverage',
+            'engine_capacity',
+            'color' ,
+            'driving_type',
             'fuel_type',
-            'favorite',      
-                   
-     
+            'is_favorite',
+            'rate',
+            'numRate',
+            'is_booking'
+
+
     ];
-    
+
     protected $dates = [
         'published_at',
         'deleted_at',
     ];
+
+
 
 
     //================== MODEL RELATIONSHIPS STARTS =========================
@@ -95,7 +101,7 @@ class Property extends Model
     public function category(){
         return $this->belongsTo(PropertyCategory::class, 'category_id');
     }
-  
+
     /**
      * Set up Property - PropertySubCategory Relationship.
      * One Property Belong to One PropertySubCategory.
@@ -103,7 +109,7 @@ class Property extends Model
     public function subcategory(){
         return $this->belongsTo(PropertySubCategory::class, 'subcategory_id');
     }
- 
+
     /**
      * Set up Property - District Relationship.
      * One Property Belong to One District.
@@ -112,7 +118,7 @@ class Property extends Model
 
         return $this->belongsTo(District::class, 'district_id');
     }
-  
+
     /**
      * Set up Property - Region Relationship.
      * One Property Belong to One Region.
@@ -132,23 +138,23 @@ class Property extends Model
     }
 
 
- 
+
 
     //===================== SCOPE MODEL START ===============================
 
     /**
-     * Scope Model are functions that will used in the Controller to filetr the 
-     * query based on the condition defined: Decleared in the model but used in 
+     * Scope Model are functions that will used in the Controller to filetr the
+     * query based on the condition defined: Decleared in the model but used in
      * the controller when chaining the eloquent query.
      * The function must start with scope keyword and followed by any name:
      * the name used after the scope keyword will be used in the controller:eg
      * public function featuredProperties()
      * {
-     *      $featuredProperties  = 
+     *      $featuredProperties  =
      * Property::with('owner','district','region','category')
      *                ->featured()
-     *                ->paginate(3);     
-     *   return *view("theme.home.index",compact('$featuredProperties'));   
+     *                ->paginate(3);
+     *   return *view("theme.home.index",compact('$featuredProperties'));
      * }
      */
 
@@ -184,12 +190,12 @@ class Property extends Model
         return $query->take($count);
     }
 
-  
+
     public function scopeRent($query){
         return $query->where('type','=','Rent');
     }
 
-    
+
 
     public function scopeSale($query){
         return $query->where('type','=','Sale');
@@ -208,7 +214,7 @@ class Property extends Model
     public function scopeRejected($query){
         return $query->where("status", "=", "rejected");
     }
-  
+
     public function scopeFilter($query, $term)
     {
         // check if any term entered
@@ -225,7 +231,7 @@ class Property extends Model
                 $q->orWhere('excerpt', 'LIKE', "%{$term}%");
             });
         }
-    } 
+    }
 
 
 
@@ -238,7 +244,7 @@ class Property extends Model
      * Then in the model you defined it by starting with get then ImageUrl in camelCase
      * followed by Attribute: eg
      * public function getImageUrl(){}
-     */ 
+     */
     public function getShortTitleAttribute($value)
     {
         //return Str::words($this->title, 3, '...');
@@ -268,7 +274,7 @@ class Property extends Model
 
     public function getImageUrlAttribute($value)
     {
-    
+
         $imageUrl = "";
 
         //Make sure the post has image
@@ -278,7 +284,7 @@ class Property extends Model
             //public_path() is helper function for site public directory
             //{$directory}/ is simple (img) folder where image get stored
             //$this->propertyImages[0]->image is the image itself
-            //this keyword refer this Model(Property) with eloquent rel with propertyImages 
+            //this keyword refer this Model(Property) with eloquent rel with propertyImages
             //we can get the first image in the array using [0] notation
             $imagePath = public_path() . "/{$directory}/" . $this->propertyImages[0]->image;
             //then if imagePath exist in the server we return the imageUrl
@@ -299,7 +305,7 @@ class Property extends Model
 
     public function getProfileUrlAttribute($value)
     {
-    
+
         $imageUrl = "";
 
         //Make sure the owner has image
@@ -336,7 +342,7 @@ class Property extends Model
         $lastName  = $this->owner->last_name;
         $fullName  = $firstName ." ".$lastName;
 
-        return $fullName; 
+        return $fullName;
     }
 
 
@@ -350,13 +356,13 @@ class Property extends Model
      * First method is using getRouteKeyName function and return the name of the field
      * public function getRouteKeyName()
      {
-        return 'slug';  
+        return 'slug';
      }
      * that will be used eg slug
-     * Then inside the controller create a function that will take model as parameter 
+     * Then inside the controller create a function that will take model as parameter
      * instead of id:eg
      * public function propertyDetail(Property $property){
-            return view('theme.home.property_detail', compact('property')); 
+            return view('theme.home.property_detail', compact('property'));
        }
      *Another of doing model binding is by RouteServiceProvider in the Provider file:
      * Then in the root function create the function as below:
@@ -373,16 +379,16 @@ class Property extends Model
         'uses' => 'BlogController@blogDetail',
         'as'   => 'blog.detail'
      ]);
-     *   
+     *
      */
     public function getRouteKeyName()
     {
-        return 'slug';  
+        return 'slug';
     }
 
 
     //===================== OTHER FUNCTIONS START =======================
-    
+
      public function dateFormatted($showTimes = false)
     {
         $format = "d/m/Y";
@@ -426,17 +432,17 @@ class Property extends Model
     }
 
     static public function random_strings($length_of_string) {
-    
+
        // random_bytes returns number of bytes
        // bin2hex converts them into hexadecimal format
        return substr(bin2hex(random_bytes($length_of_string)),
                                          0, $length_of_string);
    }
-    
 
-   
-    
 
- 
+
+
+
+
 
 }

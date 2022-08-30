@@ -20,28 +20,28 @@ class PropertiesTableSeeder extends Seeder
 
 
 
- 
+
    // This function will return
    // A random string of specified length
    public function random_strings($length_of_string) {
-    
+
        // random_bytes returns number of bytes
        // bin2hex converts them into hexadecimal format
        return substr(bin2hex(random_bytes($length_of_string)),
                                          0, $length_of_string);
    }
-    
+
 
 
     public function run()
     {
 
-      
+
        //reset the properties' table
        DB::table('properties')->truncate();
 
        //generate 10 dummy properties data
-      
+
        $properties = [];
        $faker = Factory::create();
        $date  = Carbon::create(2022, 5, 5, 9);
@@ -50,7 +50,7 @@ class PropertiesTableSeeder extends Seeder
        for($i=1; $i <= 10; $i++){
 
         //$image1 = "Propety_Image_".rand(1,5).".jpg";
-    
+
         $date ->addDays(1);
         $createdDate = clone($date);
 
@@ -67,15 +67,14 @@ class PropertiesTableSeeder extends Seeder
                'price'             => $faker->randomFloat(2, 1000, 10000),
                'is_negotiable'     => $faker->randomElement(['0' ,'1']),
                'is_featured'       => $faker->randomElement(['1' ,'0']),
+               'is_favorite'       => $faker->randomElement(['0' ,'1']),
 
                'area'              => $faker->randomElement(['2' ,'20']),
                'bed'               => $faker->randomElement(['1' ,'4']),
                'bath'              => $faker->randomElement(['1' ,'4']),
                'sitting_room'      => $faker->randomElement(['1' ,'2']),
-              
 
                'brand'             => $faker->randomElement(['Toyota' ,'Nissan', 'Range', 'Hyundai', 'Mistubishi']),
-               
                'driving_type'      => $faker->randomElement(['Automatic' ,'Manual']),
                'engine_capacity'   => $faker->randomElement(['900','1000' ,'1200','1500']),
                'coverage'          => $faker->randomElement(['900','1000' ,'1200','1500']),
@@ -90,9 +89,12 @@ class PropertiesTableSeeder extends Seeder
                'mark_as_urgent'    => $faker->randomElement(['0' ,'1']),
                'created_at'        => $createdDate,
                'updated_at'        => $createdDate,
-               'view'              => rand(1,10)*10
-              
-               
+               'view'              => rand(1,10)*10,
+               'rate'              => $faker->randomFloat(1, 1, 4),
+               'numRate'           => $faker->numberBetween(1, 100),
+
+
+
            ];
        }
        DB::table('properties')->insert($properties);

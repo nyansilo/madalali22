@@ -21,15 +21,17 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [ 
+    protected $fillable = [
         'user_name',
         'slug',
         'first_name',
         'last_name',
         'job_title',
         'email',
+        'phone_number',
         'password',
         'profile_picture',
+        'bio',
     ];
 
     /**
@@ -75,13 +77,13 @@ class User extends Authenticatable
      * First method is using getRouteKeyName function and return the name of the field
      * public function getRouteKeyName()
      {
-        return 'slug';  
+        return 'slug';
      }
      * that will be used eg slug
-     * Then inside the controller create a function that will take model as parameter 
+     * Then inside the controller create a function that will take model as parameter
      * instead of id:eg
      * public function propertyDetail(Property $property){
-            return view('theme.home.property_detail', compact('property')); 
+            return view('theme.home.property_detail', compact('property'));
        }
      *Another of doing model binding is by RouteServiceProvider in the Provider file:
      * Then in the root function create the function as below:
@@ -98,11 +100,11 @@ class User extends Authenticatable
         'uses' => 'BlogController@blogDetail',
         'as'   => 'blog.detail'
      ]);
-     *   
+     *
      */
     public function getRouteKeyName()
     {
-        return 'slug';  
+        return 'slug';
     }
 
     //===================== ACCESOR ATTRIBUTE FUNCTIONS START =======================
@@ -114,7 +116,7 @@ class User extends Authenticatable
      * Then in the model you defined it by starting with get then ImageUrl in camelCase
      * followed by Attribute: eg
      * public function getImageUrl(){}
-     */ 
+     */
 
     public function getFullNameAttribute($value)
     {
@@ -122,7 +124,7 @@ class User extends Authenticatable
         $lastName  = $this->last_name;
         $fullName  = $firstName ." ".$lastName;
 
-        return $fullName; 
+        return $fullName;
     }
 
     public function getDefaultProfileAttribute($value){
@@ -134,7 +136,7 @@ class User extends Authenticatable
 
     public function getProfileUrlAttribute($value)
     {
-    
+
         $imageUrl = "";
 
         //Make sure the owner has image
@@ -154,5 +156,5 @@ class User extends Authenticatable
         return $imageUrl;
     }
 
-  
+
 }

@@ -19,13 +19,13 @@ return new class extends Migration
             $table->engine = 'InnoDB';
             $table->id();
             $table->unsignedBigInteger('property_id')->unsigned()->nullable();;
-            $table->string('image')->nullable();
+            $table->string('image')->default('default-placeholder.png');
             $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
             $table->string('featured')->nullable();
             $table->string('name')->nullable();
             $table->string('size')->nullable();
             $table->string('extension')->nullable();
-        
+
             $table->timestamps();
         });
     }
