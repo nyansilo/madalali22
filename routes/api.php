@@ -38,6 +38,7 @@ Route::resource('blog','App\Http\Controllers\Api\BlogController');
 
     Route::get('properties/recent','App\Http\Controllers\Api\PropertyController@getRecentProperties');
     Route::get('properties/popular','App\Http\Controllers\Api\PropertyController@getPopularProperties');
+    Route::get('properties/featured','App\Http\Controllers\Api\PropertyController@getFeaturedProperties');
     Route::get('properties/category/{category_id}','App\Http\Controllers\Api\PropertyController@getPropertiesByCategoryId');
     Route::get('properties/related/{property_id}','App\Http\Controllers\Api\PropertyController@getRelatedPropertiesByPropertyId');
     Route::get('properties/user/{user_id}','App\Http\Controllers\Api\PropertyController@getUserPropertiesByUserId');
@@ -47,12 +48,10 @@ Route::resource('blog','App\Http\Controllers\Api\BlogController');
     Route::resource('properties','App\Http\Controllers\Api\PropertyController');
 
     //blog post and comment
-
-
     Route::get('blog/comments/all/{post_id}','App\Http\Controllers\Api\BlogController@getPostComments');
     Route::get('blog/comments/first/{post_id}','App\Http\Controllers\Api\BlogController@getFirstPostComments');
     Route::post('blog/comments/create/{post_id}', 'App\Http\Controllers\Api\CommentsController@store');
-    //Route::resource('blog','App\Http\Controllers\Api\BlogController');
+    Route::resource('blogs','App\Http\Controllers\Api\BlogController');
     //Route::resource('blog','App\Http\Controllers\Api\BlogController');
 
 

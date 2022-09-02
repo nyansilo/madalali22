@@ -204,6 +204,19 @@ class PropertyController extends Controller
         return $popularCollection;
     }
 
+    public function getFeaturedProperties()
+    {
+        $featuredProperties  = Property::with('owner','district','region','category')
+            ->featured()
+            ->paginate(10);
+
+        $featuredrCollection = new PropertyCollection($featuredProperties);
+        //return $popularCollection->response()->setStatusCode(200);
+        return $featuredrCollection;
+    }
+
+
+
     public function getRelatedPropertiesByPropertyId($propertyId)
     {
         $property = Property::findorFail($propertyId);

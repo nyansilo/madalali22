@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BlogCollection;
 use App\Http\Resources\CommentCollection;
-use App\Post;
+use App\Models\Blog;
 use Illuminate\Http\Request;
 
 class blogController extends Controller
@@ -18,7 +18,7 @@ class blogController extends Controller
     public function index()
     {
 
-        $posts = Post::with('author','comments')
+        $posts = Blog::with('author','comments')
             ->latestFirst()
             ->published()
             ->paginate(10);
