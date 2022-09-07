@@ -8,7 +8,7 @@ use App\Http\Resources\CommentCollection;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 
-class blogController extends Controller
+class BlogController extends Controller
 {
     /**
      * Display a listing of the resource.
