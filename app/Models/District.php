@@ -1,6 +1,6 @@
 <?php
 
-//Command: php artisan make:model District 
+//Command: php artisan make:model District
 
 namespace App\Models;
 
@@ -14,14 +14,14 @@ class District extends Model
 
 
     protected $table = 'districts';
-    
-  
+
+
     /**
      * The attributes that are mass assignable.
      * Set up the field that will be inserted in DB.
      * @var array<string, string>
      */
-    protected $fillable = [ 
+    protected $fillable = [
         'name',
         'region_id'
     ];
@@ -30,9 +30,9 @@ class District extends Model
      * Set up District-Region Relationship.
      * One District Belong to One Region.
      */
-    
+
     public function region(){
 
-        return $this->belongsTo(Region::class, 'region_id');
+        return $this->belongsTo(Region::class);
     }
 }

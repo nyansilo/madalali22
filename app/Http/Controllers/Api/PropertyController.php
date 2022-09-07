@@ -403,7 +403,7 @@ class PropertyController extends Controller
 
         $regions = Region::get();
 
-        return  response(['state' => $regions, 200 ]);
+        return  response(['regions' => $regions, 200 ]);
 
     }
 //    public function getDistrictsByRegionId(Request $request)

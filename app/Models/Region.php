@@ -1,6 +1,6 @@
 <?php
 
-//Command: php artisan make:model Region 
+//Command: php artisan make:model Region
 
 namespace App\Models;
 
@@ -24,14 +24,14 @@ class Region extends Model
     protected $fillable = [
         'name',
     ];
-   
+
     /**
      * Set up Region-District Relationship.
      * One Region contains many Districts
      */
     public function districts(){
 
-        return $this->hasMany(District::class, 'region_id');
+        return $this->hasMany(District::class);
     }
 
     /**
@@ -45,23 +45,23 @@ class Region extends Model
     //===================== SCOPE MODEL START ===============================
 
     /**
-     * Scope Model are functions that will used in the Controller to filetr the 
-     * query based on the condition defined: Decleared in the model but used in 
+     * Scope Model are functions that will used in the Controller to filetr the
+     * query based on the condition defined: Decleared in the model but used in
      * the controller when chaining the eloquent query.
      * The function must start with scope keyword and followed by any name:
      * the name used after the scope keyword will be used in the controller:eg
      * public function featuredProperties()
      * {
-     *      $featuredProperties  = 
+     *      $featuredProperties  =
      * Property::with('owner','district','region','category')
      *                ->featured()
-     *                ->paginate(3);     
-     *   return *view("theme.home.index",compact('$featuredProperties'));   
+     *                ->paginate(3);
+     *   return *view("theme.home.index",compact('$featuredProperties'));
      * }
      */
 
     public function scopeCity($query){
-      
+
         $ids = ['2','3','16','1','28','9'];
         return $query->whereIn('id', $ids);
     }
@@ -72,7 +72,7 @@ class Region extends Model
 
     /**
      * This functions is used to put plural for the case where property > 1
-     * It accept the label name to be changed bassed on number of counts  
+     * It accept the label name to be changed bassed on number of counts
      * if count>1 plural form otherwise singular form
      * strl_plural() is helper function which check on the count then assign
      * the appropiate display format
@@ -97,7 +97,7 @@ class Region extends Model
 
     public function getImageUrlAttribute($value)
     {
-    
+
         $imageUrl = "";
 
         //Make sure the post has image
@@ -123,5 +123,5 @@ class Region extends Model
              $imageUrl = asset("{$directory}/"."default.jpg");
              return $imageUrl;
     }
-    
+
 }
