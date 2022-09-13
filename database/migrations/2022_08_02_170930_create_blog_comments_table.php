@@ -22,9 +22,11 @@ return new class extends Migration
             $table->string('author_email');
             $table->string('author_url')->nullable();
             $table->text('body');
-            $table->unsignedInteger('blog_id'); 
+            $table->unsignedInteger('blog_id');
             $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
-             $table->timestamps();
+            //$table->unsignedInteger('author_id');
+            //$table->foreign('author_id')->references('id')->on('admins')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

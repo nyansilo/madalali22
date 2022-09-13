@@ -8,7 +8,7 @@ use App\Http\Resources\CommentCollection;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 
-class blogController extends Controller
+class BlogController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -103,10 +103,10 @@ class blogController extends Controller
 
     public function getPostComments($post_id)
     {
-        $post = Post::findorFail($post_id);
+        $post = Blog::findorFail($post_id);
         $postComments = $post->comments()
-        //->with('author','comments')
-        ->latestFirst()
+        ->with('blog')
+        ->latest()
         ->Paginate(10);
         return new CommentCollection($postComments);
     }

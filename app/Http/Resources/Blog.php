@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use App\Http\Resources\Lookups\BlogCategory;
+use App\Http\Resources\Lookups\BlogComment;
+
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Blog extends JsonResource
@@ -26,7 +28,8 @@ class Blog extends JsonResource
             //'comment' => new Comment($this->comments),
             'commentNumber' => $this->comments->count(),
             'likes' => $this->likes,
-            //'comments' => Comment::collection($this->comments),
+            //'comments'  => new BlogComment($this->comments),
+            'comments' => BlogComment::collection($this->comments),
             'createdAt' => $this->created_at->diffForHumans(),
             'updatedAt' => $this->updated_at->toDateTimeString(),
             'publishedAt' => $this->published_at->toDateTimeString(),

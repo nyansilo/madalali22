@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Lookups;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Comment extends JsonResource
+
+class BlogComment extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,6 +21,7 @@ class Comment extends JsonResource
             'authorName'=> $this->author_name,
             'createdAt' => $this->created_at->diffForHumans(),
             'updatedAt' => $this->updated_at->diffForHumans(),
+
         ];
     }
 }
